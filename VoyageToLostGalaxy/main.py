@@ -11,6 +11,42 @@ pygame.init()
 screen = pygame.display.set_mode((800,800))
 font = pygame.font.SysFont("Arial", 35)
 
+
+#classes
+class fallingObject:
+    x = 0
+    y = 900
+    offscreen = True
+    speed = 30
+    damaging = True
+
+    def __init__(self, damaging):
+        self.x = random.choice(lanes)
+        self.y = 900
+        self.offscreen = True
+        self.damaging = damaging
+
+    def spawn(self):
+        self.x = random.choice(lanes)
+        self.y = -100
+        self.offscreen = False
+
+    def isCol(self, x, y):
+        distance = math.sqrt(math.pow(self.x - x, 2) + math.pow(self.y - y, 2))
+        if distance < 50:
+            self.y = 801
+            self.offscreen = True
+            return True
+        return False
+
+    def checkOff(self):
+        if self.y < 800:
+            self.y += fallingObject.speed
+        else:
+            self.offscreen = True
+
+
+
 #sounds
 music = pygame.mixer.music.load("Assets/JDB - Old School Run.wav")
 pygame.mixer.music.play(-1)
@@ -21,8 +57,8 @@ bg = pygame.image.load("Assets/bgImage.jpg")
 bg = pygame.transform.scale(bg, (800,800))
 playerImage = pygame.image.load("Assets/ship.png")
 playerImage = pygame.transform.scale(playerImage, (100, 150))
-BH = pygame.image.load("Assets/blackhole.png")
-BH = pygame.transform.scale(BH, (100, 100))
+Blackhole = pygame.image.load("Assets/blackhole.png")
+Blackhole = pygame.transform.scale(Blackhole, (100, 100))
 Asteroid = pygame.image.load("Assets/asteroid.png")
 Asteroid.set_colorkey((255, 255, 255))
 Asteroid = pygame.transform.scale(Asteroid, (100, 100))
@@ -54,16 +90,9 @@ playerY = 600
 health = 3
 explosionFrame = 0
     #objects
-objectSpeed = 30
-BHoff = True #represents if BH is offscreen
-BHY = 900
-BHX = random.choice(lanes)
-Aoff = True #represents if Asteroid is offscreen
-AY = 900
-AX = random.choice(lanes)
-Goff = True #represents if Gas is offscreen
-GY = 900
-GX = random.choice(lanes)
+BH = fallingObject(True)#blackhole
+A = fallingObject(True)#Asteroid
+G = fallingObject(False)#gas
 
 #functions
 def draw_screen():
@@ -73,14 +102,14 @@ def draw_screen():
     #player
     screen.blit(playerImage, (playerX, playerY))
 
-    if BHY < 800:
-        screen.blit(BH, (BHX, BHY))
+    if BH.y < 800:
+        screen.blit(Blackhole, (BH.x, BH.y))
 
-    if AX < 800:
-        screen.blit(Asteroid, (AX, AY))
+    if A.x < 800:
+        screen.blit(Asteroid, (A.x, A.y))
 
-    if GX < 800:
-        screen.blit(gas, (GX, GY))
+    if G.x < 800:
+        screen.blit(gas, (G.x, G.y))
 
 
     #score
@@ -94,11 +123,6 @@ def draw_screen():
     score_display = font.render("Health", True, (0, 0, 0))
     screen.blit(score_display, (650, 20))
 
-def isColliding(x1, x2, y1, y2):
-    distance = math.sqrt(math.pow(x1-x2, 2) + math.pow(y1-y2, 2))
-    if distance < 50:
-        return True
-    return False
 
 def checkHealth(health):
     #global variables make it messy, but I want to use more functions and I dont think it makes sense to introduce
@@ -137,59 +161,36 @@ while running:
     #cooldown/respawn
     #could simplify with classes/functions, but classes feel like a bad idea to introduce
     if cooldown == 0:
-        if BHoff:
-            BHY = -100
-            BHX = random.choice(lanes)
-            BHoff = False
-        elif Goff:
-            GY = -100
-            GX = random.choice(lanes)
-            Goff = False
-        elif Aoff:
-            AY = -100
-            AX = random.choice(lanes)
-            Aoff = False
+        if BH.offscreen:
+            BH.spawn()
+        elif G.offscreen:
+            G.spawn()
+        elif A.offscreen:
+            A.spawn()
         cooldown = random.randint(5, 10)
     else:
         cooldown -= 1
 
     #movement
-    if BHY < 800:
-        BHY += objectSpeed
-    else:
-        BHoff = True
-    if AY < 800:
-        AY += objectSpeed
-    else:
-        Aoff = True
-    if GY < 800:
-        GY += objectSpeed
-    else:
-        Goff = True
+    A.checkOff()
+    BH.checkOff()
+    G.checkOff()
 
 
     #collision
     if health > 0:
-        if isColliding(playerX, AX, playerY, AY):
-            AY = 801
+        if A.isCol(playerX, playerY) or BH.isCol(playerX, playerY):
             health -= 1
-            Aoff = True
-        if isColliding(playerX, BHX, playerY, BHY):
-            BHY = 801
-            health -= 1
-            BHoff = True
-        if isColliding(playerX, GX, playerY, GY):
-            GY = 801
+        elif G.isCol(playerX, playerY):
             score += 10
-            Goff = True
 
     checkHealth(health)
 
     #difficulty
     if score == 100:
-        objectSpeed = 50
+        fallingObject.speed = 50
     elif score == 300:
-        objectSpeed = 60
+        fallingObject.speed = 60
     if not game_over:
         draw_screen()
     pygame.display.update()
