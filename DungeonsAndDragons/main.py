@@ -15,7 +15,7 @@ font = pygame.font.SysFont("Arial", 35)
 
 #sounds
 music = pygame.mixer.music.load("Assets/BGMusic.wav")
-pygame.mixer.music.play(-1)
+pygame.mixer.music.play(-1)#SIGNIFICANT
 intro = pygame.mixer.Sound("Assets/Intruder.wav")
 roar = pygame.mixer.Sound("Assets/Dragon.wav")
 bow_sound = pygame.mixer.Sound("Assets/BowAnimation/Bow.wav")
@@ -108,7 +108,7 @@ arrow_exist = False
 def draw_screen():#This manages a majority (if not all) of the blit commands as well as the game over state/UI
     screen.fill((0, 0, 0))
     screen.blit(bg, (0, 0))
-    player_image = pygame.transform.scale(player_animation[int(playIndex)], (100,100))
+    player_image = pygame.transform.scale(player_animation[int(playIndex)], (100, 100))
     if isLeft:
         player_image = pygame.transform.flip(player_image, True, False)
     screen.blit(player_image, (playerX, playerY))
@@ -162,14 +162,15 @@ def animate_player(x,y):
         player_animation = player_animations[0]
         looping = True
 #This doesn't need to be a function but it could be a good introduction to global variables or just organizing one's code with functions
-def jump(y, ychange):
-    global isFalling
-    if y < 300:
-        isFalling = True
+def jump(y):
+    global isFalling#lets us change falling from inside the function
+    if y < 300:#detects if we have reached maximum height
+        isFalling = True#updates falling
 
 #collision
 def is_colliding(x1, x2, y1, y2):
-    distance = math.sqrt(math.pow(x1 - x2, 2) + math.pow(y1 - y2, 2))
+    distance = math.sqrt(math.pow(x1 - x2, 2) + math.pow(y1 - y2, 2))#this calculates the distance between the 2 objects
+    #it uses the pythagorean theorum
     if distance < 50:
         return True
     else:
@@ -197,11 +198,11 @@ while run:
                 isLeft = False
                 if playerX < 650:
                     playerX_change = playerSpeed
-            if isJump == False:
+            if isJump == False:#In the pygame.KEYDOWN if-statement
                 if event.key == pygame.K_SPACE:
-                    playIndex = 0
-                    playerY_change = 50
-                    isJump = True
+                    playIndex = 0#sets animation index to 0. We have not gotten to this variable yet, but it will be important for animation sections
+                    playerY_change = 50#sets playerYChang = 50 (represents the speed of the jump)
+                    isJump = True#sets the jumping variable to true (important for animation and physics)
 
             if canShoot == True and not arrow_exist:#You don't need the == but it could be easier for the kids to understand.
                 if event.key == pygame.K_f:
@@ -220,7 +221,7 @@ while run:
     #jump processing
     if isJump:
         canShoot = False
-        jump(playerY, playerY_change)
+        jump(playerY)
 
         if isFalling:#this if/else determines whether theyre jumping up or falling down and applies motion accordingly
             playerY += playerY_change
@@ -250,23 +251,23 @@ while run:
 
 
     #fireball
-    if cooldown == 0 and offscreen:
+    if cooldown == 0 and offscreen:#respawns the fireball with a new and random time until it fires
         cooldown = random.randint(10, 40)
         fireX = 700
         offscreen = False
         canRoar = True
-    elif cooldown == 0 and not game_over:
+    elif cooldown == 0 and not game_over:#checks if a fireball can be fired
         if canRoar:
             roar.play()
             canRoar = False
         fireX -= fireSpeed
-        if fireIndex < len(fire_ball)-1:
+        if fireIndex < len(fire_ball)-1:#animates fireball
             fireIndex += 1
         else:
             fireIndex = 0
-    else:
+    else:#decreases the cooldown (20 decreases per second)
         cooldown -= 1
-    if fireX < 0:
+    if fireX < 0:#checks if fireball is offscrean and adds to the score
         offscreen = True
         score += 10
 
@@ -286,7 +287,7 @@ while run:
         else:
             arrowX += arrowSpeed
     #collision checking player and fireball
-    if is_colliding(playerX,fireX ,playerY , fireY) and not game_over:
+    if is_colliding(playerX,fireX ,playerY , fireY) and not game_over:#checks to see if the fireball and the player are collding
         isHit = True
         playerHealth -= 1
         cooldown = random.randint(10, 40)
@@ -295,7 +296,7 @@ while run:
         canRoar = True
 
 
-        if playerHealth == 0:
+        if playerHealth == 0:#checks for gameover
             game_over = True
             score -= 100
 
@@ -310,3 +311,4 @@ while run:
         canRoar = False
     pygame.display.update()
     clock.tick(FPS)
+
