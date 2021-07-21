@@ -13,7 +13,7 @@ pygame.mixer.music.play(-1)#pics
 collect = pygame.mixer.Sound("Assets/Collect.wav")
 
 BG = pygame.image.load("Assets/BG.jpg")
-BG = pygame.transform.scale(BG, (850, 800))
+BG = pygame.transform.scale(BG, (800, 800))
 #we create 2 background to give a scrolling effect
 pika0 = pygame.image.load("Assets/0.png")
 pika1 = pygame.image.load("Assets/1.png")
@@ -151,11 +151,9 @@ while running:
 
     #background code
     BGX -= scrollspeed
-    BG2X -= scrollspeed
+    BG2X = BGX + 800
     if BGX < -800:
-        BGX = 800
-    elif BG2X < -800:
-        BG2X = 800
+        BGX = 0
 
     #enemy code
     pokeX1 -= scrollspeed
@@ -186,16 +184,17 @@ while running:
 
 
     #pokeball code
-    pokeballX -= scrollspeed
-    if pokeballX < -200:
-        pokeballX = random.randint(800, 1000)
-        pokeballY = random.randint(300, 600)
+    if health > 1:
+        pokeballX -= scrollspeed
+        if pokeballX < -200:
+            pokeballX = random.randint(800, 1000)
+            pokeballY = random.randint(300, 600)
 
-    if isCol(pokeballX, pokeballY, playerX, playerY):
-        pokeballX = random.randint(800, 1000)
-        pokeballY = random.randint(300, 600)
-        collect.play()
-        score += 1
+        if isCol(pokeballX, pokeballY, playerX, playerY):
+            pokeballX = random.randint(800, 1000)
+            pokeballY = random.randint(300, 600)
+            collect.play()
+            score += 1
 
     #pokeball collision
 
