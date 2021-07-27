@@ -6,3 +6,5 @@ The first game I made was Dungeons and Dragons themed. It was also the first gam
 The second game I made was based on a space theme. I decided to make it like a super simplified version of something like minion rush/subway surfer. It is under the folder "VoyageToTheLostGalaxy".
 
 The third game I made was based on pokemon and inspired by games like flappy bird or birds life. It is under the folder "Pokemon".
+
+The fourth game I made was a short puzzle game for a 4 day week. It is meant to more teach the logic than other games, but I enjoyed giving it a complete aesthetic.
