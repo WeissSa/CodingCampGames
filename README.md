@@ -10,3 +10,5 @@ The third game I made was based on pokemon and inspired by games like flappy bir
 The fourth game I made was a short puzzle game for a 4 day week. It is meant to more teach the logic than other games, but I enjoyed giving it a complete aesthetic.
 
 The fifth game is for a full day camp (previous camps were half day). It has two phases and uses the better method of using surfaces/rects for collision. The first phase is based on flappy bird and the second on lunar lander.
+
+The sixth game is themed around wizards and harry potter. It is meant for a half day camp, but could be expanded to a full day camp quite easily. From this game on I'm expecting to use mostly the rect system. However, without classes, this can result in some messier code.
