@@ -14,6 +14,13 @@ pygame.init()
 font = pygame.font.SysFont("Arial", 40)
 screen = pygame.display.set_mode((800, 800))
 
+#sounds
+bgmusic = pygame.mixer.music.load("Sounds/BGMusic.wav")
+pygame.mixer.music.play(-1)
+dying = pygame.mixer.Sound("Sounds/Dead.wav")
+damaged = pygame.mixer.Sound("Sounds/HIt.wav")
+shoot = pygame.mixer.Sound("Sounds/Shoot.wav")
+
 #images
 
 BG = pygame.transform.scale(pygame.image.load("Assets/background.png"), (800, 800))
@@ -107,10 +114,16 @@ def draw_screen():
     if not dead:
         screen.blit(enemy_surface, enemy_rect)
 
+        #health
+        pygame.draw.rect(screen, [200, 50, 50], [580, 20, 200/3 * health, 50], False)
+
+
     #collision
     if player_rect.colliderect(enemy_rect):
         health -= 1
         canSpawn = True
+        if health > 0:
+            damaged.play()
 
     #spell
     if onscreen:
@@ -159,11 +172,13 @@ while running:
                 #casting code (z = fire, x = wind). Onscreen determines whether the player can cast
                 if not onscreen:
                     if event.key == pygame.K_z:
+                        shoot.play()
                         type = "fire"
                         onscreen = True
                         fireIndex = 0
                         spellX = playerX
                     if event.key == pygame.K_x:
+                        shoot.play()
                         type = "wind"
                         windIndex = 0
                         onscreen = True
@@ -223,6 +238,7 @@ while running:
     if health < 1 and not dead:
         dead = True
         playerIndex = 0
+        dying.play()
     #animation:
     if playerIndex < 3:
         playerIndex += 0.5
