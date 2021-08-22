@@ -14,3 +14,7 @@ The fifth game is for a full day camp (previous camps were half day). It has two
 The sixth game is themed around wizards and harry potter. It is meant for a half day camp, but could be expanded to a full day camp quite easily. From this game on I'm expecting to use mostly the rect system. However, without classes, this can result in some messier code.
 
 The seventh is inspired by the classic game: Asteroids, but is also similar to the second game. The goal behind this was to make a more definitive version as well as apply the use of rects to a similar concept. For advanced students, I would modify it to use classes instead of multiple lists per object.
+
+For the final game I wanted to get creative. I was inspired by the idea of an aim trainer and wanted to make something to test the reflexes. I also wanted to make a game completely different from any other week!
+
+
