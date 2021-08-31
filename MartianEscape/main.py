@@ -75,9 +75,10 @@ def create_click(position):
         clickIndexes.append(0)
 
 def draw_clicks(clicks):
-    for i in range (len(clicks)):
-        surface = click_animation[clickIndexes[i]]
-        screen.blit(surface, clicks[i])
+    for click in clicks:
+        i = clicks.index(click)
+        index = clickIndexes[i]
+        screen.blit(click_animation[index], click)
         #handles animation
         if clickIndexes[i] < 4:
             clickIndexes[i] += 1
