@@ -70,8 +70,9 @@ pygame.time.set_timer(NEWFRIEND, 1500)
 
 def create_click(position):
     click_rect = click_animation[0].get_rect(center=position)
-    clicks.append(click_rect)
-    clickIndexes.append(0)
+    if click_rect not in clicks:
+        clicks.append(click_rect)
+        clickIndexes.append(0)
 
 def draw_clicks(clicks):
     for i in range (len(clicks)):
@@ -149,7 +150,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        if event.type == pygame.MOUSEBUTTONUP:
+        if event.type == pygame.MOUSEBUTTONUP and not game_over:
             pos = pygame.mouse.get_pos()
             create_click(pos)
 
@@ -174,6 +175,8 @@ while running:
             game_over = False
             game_lost = False
             spaceships.clear()
+            clicks.clear()
+            clickIndexes.clear()
             isShowing = False
             #resets music
             pygame.mixer.music.stop()
