@@ -19,5 +19,5 @@ For the 2nd last game I wanted to get creative. I was inspired by the idea of an
 
 Then I designed a game around some themes some students gave me in the fall (so that they could design their own game without having to design it and then I could lead them through the process). This game is MedievalBash and is in my opinion the best coded out of all the games. It features a shop and a dungeon mode and impliments complete 2d movement (pokemon style).
 
-If you were to teach one game, I would reccomend either Medieval Bash or the fifth game.
+If you were to teach one game, I would reccomend either Medieval Bash or the fifth game (MartianEscape).
 The fifth game would probably be better for beginners, but for intermediate students wanting to learn classes, Medieval Bash should be the right amount of challenge.
