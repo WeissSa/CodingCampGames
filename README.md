@@ -15,6 +15,9 @@ The sixth game is themed around wizards and harry potter. It is meant for a half
 
 The seventh is inspired by the classic game: Asteroids, but is also similar to the second game. The goal behind this was to make a more definitive version as well as apply the use of rects to a similar concept. For advanced students, I would modify it to use classes instead of multiple lists per object.
 
-For the final game I wanted to get creative. I was inspired by the idea of an aim trainer and wanted to make something to test the reflexes. I also wanted to make a game completely different from any other week!
+For the 2nd last game I wanted to get creative. I was inspired by the idea of an aim trainer and wanted to make something to test the reflexes. I also wanted to make a game completely different from any other week!
 
+Then I designed a game around some themes some students gave me in the fall (so that they could design their own game without having to design it and then I could lead them through the process). This game is MedievalBash and is in my opinion the best coded out of all the games. It features a shop and a dungeon mode and impliments complete 2d movement (pokemon style).
 
+If you were to teach one game, I would reccomend either Medieval Bash or the fifth game.
+The fifth game would probably be better for beginners, but for intermediate students wanting to learn classes, Medieval Bash should be the right amount of challenge.
